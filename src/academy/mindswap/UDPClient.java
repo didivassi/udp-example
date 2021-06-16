@@ -23,12 +23,25 @@ public class UDPClient {
             //create the datagram packet
             DatagramPacket sendPacket = new DatagramPacket(sendBuffer, sendBuffer.length, address, port);
             //populate the receiveBuffer
-            socket.send(sendPacket); //blocking method
+            socket.send(sendPacket);
+
             byte[] receiveBuffer=new byte[1024];
-            DatagramPacket receivedPacket = new DatagramPacket(receiveBuffer, receiveBuffer.length);
-            //populate the receiveBuffer
-            socket.receive(receivedPacket); //blocking method
-            returnMessage=new String(Utils.trim(receiveBuffer));
+
+            socket.setSoTimeout(10000);
+            while(true) {
+                DatagramPacket receivedPacket = new DatagramPacket(receiveBuffer, receiveBuffer.length);
+                try {
+                    socket.receive(receivedPacket); //blocking method
+                    returnMessage=new String(Utils.trim(receiveBuffer));
+                    break;
+                } catch (SocketTimeoutException e) {
+                    // resend
+                    socket.send(sendPacket);
+                    continue;
+                }
+            }
+
+
 
         } catch (SocketException e) {
             e.printStackTrace();

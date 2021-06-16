@@ -30,7 +30,7 @@ public class UDPServer {
                 //populate the receiveBuffer
                 socket.receive(receivedPacket); //blocking method
                 //System.out.println(receivedPacket.getPort());
-                //convert the byte array to string from received messagge
+                //convert the byte array to string from received message
                 String command=new String(Utils.trim(receiveBuffer)).toLowerCase();
 
                 byte[] messageToSend;
