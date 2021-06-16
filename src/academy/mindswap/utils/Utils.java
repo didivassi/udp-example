@@ -1,9 +1,10 @@
-package academy.mindswap;
+package academy.mindswap.utils;
 
 import java.util.Arrays;
 
 public final class Utils {
-    static byte[] trim(byte[] bytes)
+
+    public static byte[] trim(byte[] bytes)
     {
         int i = bytes.length - 1;
         while (i >= 0 && bytes[i] == 0)

@@ -1,12 +1,12 @@
-package academy.mindswap;
+package academy.mindswap.udp;
+
+import academy.mindswap.udp.Commands;
+import academy.mindswap.utils.Utils;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.net.SocketException;
-import java.util.Arrays;
-import java.util.Locale;
 import java.util.Random;
 
 public class UDPServer {
@@ -36,20 +36,20 @@ public class UDPServer {
                 byte[] messageToSend;
 
                 switch (command){
-                    case "hit me":
+                    case Commands.HIT_ME_COMMAND:
                         long random=new Random().longs(0, quotes.length()).findFirst().getAsLong();
                         quotes.seek(random);
                         quotes.readLine();//get to the end of the first line
                         messageToSend = quotes.readLine().getBytes();
                         break;
                     default:
-                        messageToSend="Command not recognized".getBytes();
+                        messageToSend= Commands.NOT_A_COMMAND.getBytes();
                         break;
 
                 }
 
                 DatagramPacket sendPacket = new DatagramPacket(messageToSend, messageToSend.length, receivedPacket.getAddress(), receivedPacket.getPort());
-                socket.send(sendPacket); //blocking method
+                socket.send(sendPacket);
 
                 //test on terminal
                 //nc -u localhost 8080
