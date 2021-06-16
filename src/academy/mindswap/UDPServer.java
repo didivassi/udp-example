@@ -54,11 +54,9 @@ public class UDPServer {
                 //test on terminal
                 //nc -u localhost 8080
             }
-        } catch (SocketException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             if(socket!=null)
                 socket.close();
         }

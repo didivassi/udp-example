@@ -37,18 +37,14 @@ public class UDPClient {
                 } catch (SocketTimeoutException e) {
                     // resend
                     socket.send(sendPacket);
-                    continue;
                 }
             }
 
 
 
-        } catch (SocketException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             if(socket!=null)
                 socket.close();
         }
